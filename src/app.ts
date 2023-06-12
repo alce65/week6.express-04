@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
 import { sampleRouter } from './routers/sample.router.js';
+import { errorHandler } from './middleware/error.js';
 const debug = createDebug('W6:App');
 
 export const app = express();
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use((_req, _res, next) => {
   debug('Soy un middleware');
   next();
+  // TEMP next(new Error('Error'));
 });
 
 app.get('/', (req, res) => {
@@ -27,3 +29,5 @@ app.get('/', (req, res) => {
 });
 
 app.use('/sample', sampleRouter);
+
+app.use(errorHandler);

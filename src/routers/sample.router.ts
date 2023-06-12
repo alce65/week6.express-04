@@ -1,7 +1,11 @@
 import { Router as createRouter } from 'express';
 import { SampleController } from '../controllers/sample.controller.js';
+import { SampleRepo } from '../repository/sample.repository.js';
+import { Repo } from '../repository/repo.js';
+import { Sample } from '../entities/sample.js';
 
-const controller = new SampleController();
+const repo: Repo<Sample> = new SampleRepo();
+const controller = new SampleController(repo);
 export const sampleRouter = createRouter();
 
 sampleRouter.get('/', controller.getAll.bind(controller));

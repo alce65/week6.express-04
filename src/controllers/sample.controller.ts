@@ -1,33 +1,55 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { SampleRepo } from '../repository/sample.repository.js';
 import createDebug from 'debug';
 const debug = createDebug('W6:SampleController');
 
 export class SampleController {
-  repo: SampleRepo;
-  constructor() {
-    this.repo = new SampleRepo();
+  // eslint-disable-next-line no-unused-vars
+  constructor(private repo: SampleRepo) {
     debug('Instantiated SampleController');
     debug(this.repo);
   }
 
-  async getAll(req: Request, res: Response) {
-    res.send(await this.repo.readAll());
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.send(await this.repo.query());
+    } catch (error) {
+      next(error);
+    }
   }
 
-  getById(req: Request, res: Response) {
-    res.send('Hello number: ' + req.params.id);
+  async getById(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.send(await this.repo.queryById(req.params.id));
+    } catch (error) {
+      next(error);
+    }
   }
 
-  post(req: Request, res: Response) {
-    res.send('Post Sample!: ' + req.body.user);
+  async post(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.status(201);
+      res.send(await this.repo.create(req.body));
+    } catch (error) {
+      next(error);
+    }
   }
 
-  patch(req: Request, res: Response) {
-    res.send('Patch Sample!: ' + req.body.user);
+  async patch(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.status(202);
+      res.send(await this.repo.update(req.params.id, req.body));
+    } catch (error) {
+      next(error);
+    }
   }
 
-  deleteById(req: Request, res: Response) {
-    res.send('Delete Sample!: ' + req.body.user);
+  async deleteById(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.status(204);
+      res.send(await this.repo.delete(req.params.id));
+    } catch (error) {
+      next(error);
+    }
   }
 }
