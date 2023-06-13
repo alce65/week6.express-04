@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import { BookController } from '../controllers/book.controller.js';
-import { BookRepo } from '../repository/book.m.repository.js';
+import { BookRepo } from '../repository/book.mongo.repository.js';
 import { Repo } from '../repository/repo.js';
 import { Book } from '../entities/book.js';
 

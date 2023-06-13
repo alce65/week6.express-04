@@ -1,4 +1,4 @@
-import { BookRepo } from '../repository/book.m.repository.js';
+import { BookRepo } from '../repository/book.mongo.repository.js';
 import { Controller } from './controller.js';
 import { Book } from '../entities/book.js';
 
