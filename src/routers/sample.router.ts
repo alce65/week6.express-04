@@ -4,6 +4,10 @@ import { SampleRepo } from '../repository/sample.repository.js';
 import { Repo } from '../repository/repo.js';
 import { Sample } from '../entities/sample.js';
 
+import createDebug from 'debug';
+const debug = createDebug('W6:SampleRouter');
+
+debug('Executed');
 const repo: Repo<Sample> = new SampleRepo();
 const controller = new SampleController(repo);
 export const sampleRouter = createRouter();

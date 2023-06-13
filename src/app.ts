@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
 import { sampleRouter } from './routers/sample.router.js';
+import { bookRouter } from './routers/book.router.js';
 import { errorHandler } from './middleware/error.js';
 const debug = createDebug('W6:App');
 
@@ -29,5 +30,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/sample', sampleRouter);
+app.use('/book', bookRouter);
 
 app.use(errorHandler);

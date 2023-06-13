@@ -1,24 +1,23 @@
 import fs from 'fs/promises';
-import { Sample } from '../entities/sample.js';
+import createDebug from 'debug';
+import { Book } from '../entities/book.js';
 import { Repo } from './repo.js';
 import { HttpError } from '../types/http.error.js';
-
-import createDebug from 'debug';
-const debug = createDebug('W6:SampleRepo');
+const debug = createDebug('W6:BookRepo');
 
 const file = './data.json';
 
-const createID = (): Sample['id'] =>
+const createID = (): Book['id'] =>
   Math.trunc(Math.random() * 1_000_000).toString();
 
-export class SampleRepo implements Repo<Sample> {
+export class BookRepo implements Repo<Book> {
   constructor() {
     debug('Instantiated');
   }
 
   async query() {
     const stringData = await fs.readFile(file, { encoding: 'utf-8' });
-    const aData = JSON.parse(stringData) as Sample[];
+    const aData = JSON.parse(stringData) as Book[];
     return aData;
   }
 
@@ -29,31 +28,31 @@ export class SampleRepo implements Repo<Sample> {
     return result;
   }
 
-  async create(data: Omit<Sample, 'id'>) {
+  async create(data: Omit<Book, 'id'>) {
     const aData = await this.query();
-    const newSample: Sample = { ...data, id: createID() };
-    const result = JSON.stringify([...aData, newSample]);
+    const newBook: Book = { ...data, id: createID() };
+    const result = JSON.stringify([...aData, newBook]);
     await fs.writeFile(file, result, { encoding: 'utf8' });
-    return newSample;
+    return newBook;
   }
 
-  async update(id: string, data: Partial<Sample>) {
+  async update(id: string, data: Partial<Book>) {
     const aData = await this.query();
-    let newSample: Sample = {} as Sample;
+    let newBook: Book = {} as Book;
     const result = aData.map((item) => {
       if (item.id === id) {
-        newSample = { ...item, ...data };
-        return newSample;
+        newBook = { ...item, ...data };
+        return newBook;
       }
 
       return item;
     });
 
-    if (!newSample!.id)
+    if (!newBook!.id)
       throw new HttpError(404, 'Not found', 'Bad id for the update');
 
     await fs.writeFile(file, JSON.stringify(result), { encoding: 'utf8' });
-    return newSample;
+    return newBook;
   }
 
   async delete(id: string) {
