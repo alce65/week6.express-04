@@ -11,7 +11,7 @@ const file = './data.json';
 const createID = (): Sample['id'] =>
   Math.trunc(Math.random() * 1_000_000).toString();
 
-export class SampleRepo implements Repo<Sample> {
+export class SampleRepo implements Omit<Repo<Sample>, 'search'> {
   constructor() {
     debug('Instantiated');
   }

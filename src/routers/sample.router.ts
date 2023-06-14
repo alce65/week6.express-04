@@ -8,7 +8,7 @@ import createDebug from 'debug';
 const debug = createDebug('W6:SampleRouter');
 
 debug('Executed');
-const repo: Repo<Sample> = new SampleRepo();
+const repo: Repo<Sample> = new SampleRepo() as Repo<Sample>;
 const controller = new SampleController(repo);
 export const sampleRouter = createRouter();
 

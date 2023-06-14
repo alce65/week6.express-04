@@ -22,6 +22,17 @@ export class BookRepo implements Repo<Book> {
     return result;
   }
 
+  async search({
+    key,
+    value,
+  }: {
+    key: string;
+    value: unknown;
+  }): Promise<Book[]> {
+    const result = await BookModel.find({ [key]: value }).exec();
+    return result;
+  }
+
   async create(data: Omit<Book, 'id'>): Promise<Book> {
     const newBook = await BookModel.create(data);
     return newBook;

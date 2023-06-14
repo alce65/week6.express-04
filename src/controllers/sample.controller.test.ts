@@ -1,16 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
-import { SampleRepo } from '../repository/sample.repository';
 import { SampleController } from './sample.controller';
+import { Sample } from '../entities/sample';
+import { Repo } from '../repository/repo';
 
 describe('Given SampleController class', () => {
   describe('When it is instantiated', () => {
-    const mockRepo: SampleRepo = {
+    const mockRepo = {
       query: jest.fn(),
       queryById: jest.fn(),
       create: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
-    };
+    } as unknown as Repo<Sample>;
     const req = {
       params: { id: 1 },
     } as unknown as Request;
