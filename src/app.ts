@@ -26,9 +26,7 @@ app.use((_req, _res, next) => {
   // TEMP next(new Error('Error'));
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello Express!');
-});
+app.use(express.static('public'));
 
 app.use('/sample', sampleRouter);
 app.use('/book', bookRouter);
