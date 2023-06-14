@@ -8,6 +8,7 @@
     "server": "cross-env DEBUG=W6* PORT=4400 nodemon dist/index.js",
     "server2": "nodemon dist/index.js",
     "build": "tsc --watch",
+    "build:prod": "tsc",
     "start": "concurrently \"npm:server\" \"npm:build\"",
     "test": "jest --watchAll --coverage",
     "test:prod": "jest --watchAll --coverage --watchAll=false --passWithNoTests"
