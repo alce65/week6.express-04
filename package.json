@@ -16,6 +16,7 @@
   "author": "Alejandro Cerezo",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/debug": "^4.1.8",
     "@types/express": "^4.17.17",
@@ -39,6 +40,7 @@
     "singleQuote": true
   },
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "commander": "^10.0.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",

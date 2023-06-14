@@ -29,7 +29,7 @@ describe('Given SampleRepo Class', () => {
 
 describe('When it is instantiated and delete method is called but the id is not found', () => {
   const repo = new SampleRepo();
-  test.only('Then it should throw an error', async () => {
+  test('Then it should throw an error', async () => {
     const mockId = '5';
     const mockThings = [{ id: '1', data: '' }];
 

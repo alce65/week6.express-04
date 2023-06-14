@@ -1,3 +1,4 @@
+import { Book } from '../entities/book.js';
 import { BookModel } from './book.mongo.model.js';
 import { BookRepo } from './book.mongo.repository';
 
@@ -34,5 +35,13 @@ describe('Given BookRepo Class', () => {
     //   expect(fs.readFile).toHaveBeenCalled();
     //   expect(result).toEqual(mockSample[0]);
     // });
+
+    test('Then method create should be used', async () => {
+      const mockBook = { author: 'Marco' } as unknown as Book;
+      BookModel.create = jest.fn().mockResolvedValue(mockBook);
+      const result = await repo.create(mockBook);
+      expect(BookModel.create).toHaveBeenCalled();
+      expect(result).toEqual(mockBook);
+    });
   });
 });

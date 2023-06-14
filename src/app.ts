@@ -5,6 +5,7 @@ import createDebug from 'debug';
 import { sampleRouter } from './routers/sample.router.js';
 import { bookRouter } from './routers/book.router.js';
 import { errorHandler } from './middleware/error.js';
+import { userRouter } from './routers/user.router.js';
 const debug = createDebug('W6:App');
 
 export const app = express();
@@ -31,5 +32,6 @@ app.get('/', (req, res) => {
 
 app.use('/sample', sampleRouter);
 app.use('/book', bookRouter);
+app.use('/user', userRouter);
 
 app.use(errorHandler);
