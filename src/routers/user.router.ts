@@ -12,4 +12,4 @@ const controller = new UserController(repo);
 export const userRouter = createRouter();
 
 userRouter.post('/register', controller.register.bind(controller));
-userRouter.patch('/login');
+userRouter.patch('/login', controller.login.bind(controller));
