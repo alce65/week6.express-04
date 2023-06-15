@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { secret } from '../config.js';
 import { HttpError } from '../types/http.error.js';
 
-type PayloadToken = {
+export type PayloadToken = {
   id: string;
   userName: string;
 } & jwt.JwtPayload;
