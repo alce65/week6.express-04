@@ -15,8 +15,16 @@ const controller = new BookController(repo);
 const auth = new AuthInterceptor();
 export const bookRouter = createRouter();
 
-bookRouter.get('/', auth.logged.bind(auth), controller.getAll.bind(controller));
+bookRouter.get('/', controller.getAll.bind(controller));
 bookRouter.get('/:id', controller.getById.bind(controller));
-bookRouter.post('/', controller.post.bind(controller));
-bookRouter.patch('/:id', controller.patch.bind(controller));
-bookRouter.delete('/:id', controller.deleteById.bind(controller));
+bookRouter.post('/', auth.logged.bind(auth), controller.post.bind(controller));
+bookRouter.patch(
+  '/:id',
+  auth.logged.bind(auth),
+  controller.patch.bind(controller)
+);
+bookRouter.delete(
+  '/:id',
+  auth.logged.bind(auth),
+  controller.deleteById.bind(controller)
+);
