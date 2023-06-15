@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserRepo } from '../repository/user.mongo.repository.js';
+import { AuthServices, PayloadToken } from '../services/auth.js';
+import { HttpError } from '../types/http.error.js';
+import { LoginResponse } from '../types/response.api.js';
 
 import createDebug from 'debug';
-import { AuthServices } from '../services/auth.js';
-import { HttpError } from '../types/http.error.js';
 const debug = createDebug('W6:UserController');
 
 export class UserController {
@@ -53,7 +54,16 @@ export class UserController {
         throw new HttpError(400, 'Bad request', 'User or password invalid (3)');
       }
 
-      res.send(data[0]);
+      const payload: PayloadToken = {
+        id: data[0].id,
+        userName: data[0].userName,
+      };
+      const token = AuthServices.createJWT(payload);
+      const response: LoginResponse = {
+        token,
+        user: data[0],
+      };
+      res.send(response);
     } catch (error) {
       next(error);
     }

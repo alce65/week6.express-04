@@ -19,7 +19,6 @@ export const errorHandler = (
     res.statusMessage = error.message;
     res.send({
       status: error.status + ' ' + error.statusMessage,
-      error: error.message,
     });
     return;
   }
@@ -30,7 +29,6 @@ export const errorHandler = (
     res.statusMessage = 'Bad Request';
     res.send({
       status: '400 Bad request',
-      error: error.message,
     });
     return;
   }
@@ -41,7 +39,6 @@ export const errorHandler = (
     res.statusMessage = 'Not accepted';
     res.send({
       status: '406 Not accepted',
-      error: error.message,
     });
     return;
   }

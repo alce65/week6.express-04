@@ -17,12 +17,16 @@ export class AuthServices {
   }
 
   static verifyJWTGettingPayload(token: string) {
-    const result = jwt.verify(token, secret!);
-    if (typeof result === 'string') {
-      throw new HttpError(498, 'Invalid Token', result);
-    }
+    try {
+      const result = jwt.verify(token, secret!);
+      if (typeof result === 'string') {
+        throw new HttpError(498, 'Invalid Token', result);
+      }
 
-    return result;
+      return result as PayloadToken;
+    } catch (error) {
+      throw new HttpError(498, 'Invalid Token', (error as Error).message);
+    }
   }
 
   static hash(value: string) {
