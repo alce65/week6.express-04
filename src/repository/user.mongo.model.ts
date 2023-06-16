@@ -16,6 +16,12 @@ const userSchema = new Schema<User>({
     type: String,
     required: true,
   },
+  books: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Book',
+    },
+  ],
 });
 
 userSchema.set('toJSON', {

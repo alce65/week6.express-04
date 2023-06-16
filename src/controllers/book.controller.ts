@@ -17,12 +17,15 @@ export class BookController extends Controller<Book> {
 
   async post(req: Request, res: Response, next: NextFunction) {
     try {
-      const { id } = req.body.tokenPayload as PayloadToken;
-      await this.userRepo.queryById(id);
+      const { id: userId } = req.body.tokenPayload as PayloadToken;
+      const user = await this.userRepo.queryById(userId);
       delete req.body.tokenPayload;
-      req.body.owner = id;
+      req.body.owner = userId;
+      const newBook = await this.repo.create(req.body);
+      user.books.push(newBook);
+      this.userRepo.update(user.id, user);
       res.status(201);
-      res.send(await this.repo.create(req.body));
+      res.send(newBook);
     } catch (error) {
       next(error);
     }

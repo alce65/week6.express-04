@@ -6,7 +6,7 @@ import { Repo } from '../repository/repo';
 describe('Given SampleController class', () => {
   describe('When it is instantiated', () => {
     const mockRepo = {
-      query: jest.fn(),
+      query: jest.fn().mockResolvedValue([]),
       queryById: jest.fn(),
       create: jest.fn(),
       update: jest.fn(),

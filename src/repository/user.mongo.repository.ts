@@ -7,7 +7,7 @@ import { HttpError } from '../types/http.error.js';
 // TEMP import { HttpError } from '../types/http.error.js';
 const debug = createDebug('W6:UserRepo');
 
-export class UserRepo implements Partial<Repo<User>> {
+export class UserRepo implements Repo<User> {
   constructor() {
     debug('Instantiated', UserModel);
   }
@@ -38,5 +38,20 @@ export class UserRepo implements Partial<Repo<User>> {
   async create(data: Omit<User, 'id'>): Promise<User> {
     const newUser = await UserModel.create(data);
     return newUser;
+  }
+
+  async update(id: string, data: Partial<User>): Promise<User> {
+    const newUser = await UserModel.findByIdAndUpdate(id, data, {
+      new: true,
+    }).exec();
+    if (newUser === null)
+      throw new HttpError(404, 'Not found', 'Bad id for the update');
+    return newUser;
+  }
+
+  async delete(id: string): Promise<void> {
+    const result = await UserModel.findByIdAndDelete(id).exec();
+    if (result === null)
+      throw new HttpError(404, 'Not found', 'Bad id for the delete');
   }
 }

@@ -17,24 +17,29 @@ describe('Given BookRepo Class', () => {
     test('Then method query should be used', async () => {
       const exec = jest.fn().mockResolvedValue([]);
       BookModel.find = jest.fn().mockReturnValueOnce({
-        exec,
+        populate: jest.fn().mockReturnValueOnce({
+          exec,
+        }),
       });
-
       const result = await repo.query();
       expect(BookModel.find).toHaveBeenCalled();
       expect(exec).toHaveBeenCalled();
       expect(result).toEqual([]);
     });
 
-    // TEMP test('Then method queryById should be used', async () => {
-    //   const mockSample = [{ id: '1' }];
-    //   (fs.readFile as jest.Mock).mockResolvedValueOnce(
-    //     JSON.stringify(mockSample)
-    //   );
-    //   const result = await repo.queryById('1');
-    //   expect(fs.readFile).toHaveBeenCalled();
-    //   expect(result).toEqual(mockSample[0]);
-    // });
+    test('Then method queryById should be used', async () => {
+      const mockSample = { id: '1' };
+      const exec = jest.fn().mockResolvedValue(mockSample);
+      BookModel.findById = jest.fn().mockReturnValueOnce({
+        populate: jest.fn().mockReturnValue({
+          exec,
+        }),
+      });
+
+      const result = await repo.queryById('1');
+      expect(exec).toHaveBeenCalled();
+      expect(result).toEqual(mockSample);
+    });
 
     test('Then method create should be used', async () => {
       const mockBook = { author: 'Marco' } as unknown as Book;
